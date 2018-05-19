@@ -1,0 +1,5 @@
+---
+zabbix_agent_url: 'https://www.zabbix.com/downloads/3.4.6/zabbix_agents_3.4.6.win.zip'
+zabbix_agent_ip: '0.0.0.0'
+zabbix_agent_port: '10050'
+zabbix_agent_timeout: '10'

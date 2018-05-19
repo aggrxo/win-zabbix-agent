@@ -1,0 +1,7 @@
+---
+- hosts: windows
+  remote_user: Administrator
+  vars:
+    - zabbix_server_ip: '10.10.10.22'
+  roles:
+    - windows.zabbix

@@ -1,0 +1,17 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: qwsj
+  description: role for install zabbix-agent on the windows server
+  issue_tracker_url: https://github.com/qwsj/win-zabbix-agent/issues
+  license: AGPLv3
+  min_ansible_version: 2.4
+  platforms:
+  - name: Windows
+    versions:
+    - 2012R2
+  galaxy_tags:
+   - Windows
+   - Zabbix
+   - WinRM

@@ -1,0 +1,43 @@
+---
+- name: Create zabbix directory
+  win_file:
+    path: 'C:\Zabbix'
+    state: directory
+
+- name: Download zabbix-agent.zip
+  win_get_url:
+    url: '{{ zabbix_agent_url }}'
+    dest: C:\Zabbix\zabbix_agent.zip
+
+- name: Unzip zabbix-agent.zip
+  win_unzip:
+    src: C:\Zabbix\zabbix_agent.zip
+    dest: C:\Zabbix\
+    delete_archive: yes
+
+- name: Create zabbix config directory
+  win_file:
+    path: 'C:\Zabbix\conf\conf.d'
+    state: directory
+
+- name: Make config from template
+  win_template:
+    src: zabbix_agentd.win.conf.j2
+    dest: 'C:\Zabbix\conf\zabbix_agentd.win.conf'
+
+- name: Install zabbix-agent
+  win_command: CMD /C "C:\Zabbix\bin\win64\zabbix_agentd.exe --config C:\Zabbix\conf\zabbix_agentd.win.conf --install"
+
+- name: Start zabbix-agent
+  win_command: CMD /C "C:\Zabbix\bin\win64\zabbix_agentd.exe --config C:\Zabbix\conf\zabbix_agentd.win.conf --start"
+
+- name: Add firewall rule for {{ zabbix_agent_port }} port
+  win_firewall_rule:
+    name: 'Zabbix-Agent'
+    localport: '{{ zabbix_agent_port }}'
+    action: allow
+    direction: in
+    protocol: tcp
+    remoteip: '{{ zabbix_server_ip }}'
+    state: present
+    enabled: yes
